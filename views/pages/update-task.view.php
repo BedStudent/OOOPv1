@@ -8,7 +8,6 @@
         </div>
         <div class="form-group">
             <select name="priority" class="form-control" value="<?=$data['priority'];?>">
-                <option value="selected disabled">Pasirinkite prioriteta</option>
                 <option value="1">1</option>
                 <option value="2">2</option>
                 <option value="3">3</option>

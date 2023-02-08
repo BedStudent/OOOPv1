@@ -18,10 +18,10 @@
         <th>Salinti</th>
         <?php foreach($task->allTasks() as $data):?>
             <tr>
-                <td><?$data['subject'];?></td>
-                <td><?$data['status'];?></td>
-                <td><?$data['priority'];?></td>
-                <td><?$data['dueDate'];?></td>
+                <td><?=$data['subject'];?></td>
+                <td><?=$data['status'];?></td>
+                <td><?=$data['priority'];?></td>
+                <td><?=$data['dueDate'];?></td>
                 <td><a href="/update-task/id/<?=$data['id'];?>">Atnaujinti</a></td>
                 <td><a href="/delete-task/id/<?=$data['id'];?>">Salinti</a></td>
             </tr>

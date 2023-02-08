@@ -56,16 +56,28 @@ class Task{
     }
 
     public function storeUpdate($task, $id){
+
+        var_dump($task);
+        var_dump($id);
         try{
-            $query = "UPDATE tasks SET subject=:subject,priority=:priority,dueDate=:deuDate, modified= NOW() WHERE id=:id";
+            $query = "UPDATE tasks SET subject=:subject,priority=:priority,dueDate=:dueDate, modified= NOW() WHERE id=:id";
             $stmt = $this->pdo->prepare($query);
             $stmt->bindParam(':subject',$task['Title'], PDO::PARAM_STR);
             $stmt->bindParam(':priority',$task['priority'], PDO::PARAM_STR);
             $stmt->bindParam(':dueDate',$task['date'], PDO::PARAM_STR);
-            $stmt->bindParam(':id',$task['id'], PDO::PARAM_STR);
+            $stmt->bindParam(':id',$id, PDO::PARAM_STR);
             $stmt->execute();
             header("Location:/");
 
+        }catch(\PDOException $e){
+            echo $e->getMessage();
+        }
+    }
+    public function completeTask($id){
+        try{
+            $stmt = $this->pdo->prepare("UPDATE tasks SET status=1, modified=NOW() WHERE id=$id");
+            $stmt->execute();
+            header("Location:/");
         }catch(\PDOException $e){
             echo $e->getMessage();
         }
