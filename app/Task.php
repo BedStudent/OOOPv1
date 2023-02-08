@@ -37,5 +37,37 @@ class Task{
             echo $e->getMessage();
         }
     }
+    public function allTasks(){
+        $stmt=$this->pdo->prepare('select * from tasks');
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC); //Grazinam duomenis kaip asociatyvus masyvas
+    }
 
+    public function deleteTask($id){
+        $stmt= $this->pdo->prepare("DELETE FROM `tasks` WHERE id=$id");
+        $stmt->execute();
+        header('Location:/');
+    }
+
+    public function update($id){
+        $stmt = $this->pdo->prepare("SELECT * FROM `tasks` WHERE id=$id");
+        $stmt->execute();
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+
+    public function storeUpdate($task, $id){
+        try{
+            $query = "UPDATE tasks SET subject=:subject,priority=:priority,dueDate=:deuDate, modified= NOW() WHERE id=:id";
+            $stmt = $this->pdo->prepare($query);
+            $stmt->bindParam(':subject',$task['Title'], PDO::PARAM_STR);
+            $stmt->bindParam(':priority',$task['priority'], PDO::PARAM_STR);
+            $stmt->bindParam(':dueDate',$task['date'], PDO::PARAM_STR);
+            $stmt->bindParam(':id',$task['id'], PDO::PARAM_STR);
+            $stmt->execute();
+            header("Location:/");
+
+        }catch(\PDOException $e){
+            echo $e->getMessage();
+        }
+    }
 }
